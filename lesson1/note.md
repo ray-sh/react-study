@@ -21,3 +21,11 @@ We suggest that you begin by typing:
   cd my-app
   yarn start
 ```
+
+> yarn start 运行多次以后会有ENOSPC的问题，Run the below command to avoid ENOSPC:
+> echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+2. component之间信息的交换
+  - 每个square有自己的value
+  - Board保存整个棋盘的状态
+

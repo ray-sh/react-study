@@ -2,33 +2,36 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 class Square extends React.Component {
-    constructor(props){
-      super(props);
-      //state就是一个kv
-      this.state = {
-        value: null,
-        name: 'square'
-      }
-    }
     render() {
       return (
         <button className="square" 
-          onClick={() =>
-            //状态的更新就是传入一个新的kv
-            this.setState({value: 'X'})}>
-          {/*square要显示的内容*/}
-          {this.state.value}
+          onClick={() => this.props.onClick()}
+        >
+          {this.props.value}
         </button>
       );
     }
   }
   
   class Board extends React.Component {
+    constructor(props){
+      super(props)
+      this.state = {
+        squares: Array(9).fill(null),
+      };
+    }
     renderSquare(i) {
       //value只能是property，只有property可以传入
-      return <Square value={i}/>;
+      return <Square 
+        value={this.state.squares[i]}
+        onClick = {() => this.handleClick(i)}
+        />;
     }
-  
+    handleClick(i) {
+      const squares = this.state.squares.slice();
+      squares[i] = 'X';
+      this.setState({squares: squares});
+    }
     render() {
       const status = 'Next player: X';
   
