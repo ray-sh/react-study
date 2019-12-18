@@ -14,6 +14,7 @@ import './index.css';
       super(props)
       this.state = {
         squares: Array(9).fill(null),
+        isX: true
       };
     }
     renderSquare(i) {
@@ -23,14 +24,25 @@ import './index.css';
         onClick = {() => this.handleClick(i)}
         />;
     }
+    
     handleClick(i) {
-      const squares = this.state.squares.slice();
-      squares[i] = 'X';
-      this.setState({squares: squares});
+      const squares = this.state.squares.slice(); 
+      squares[i] = this.state.isX ? 'X': '0' 
+      //用户的交互，触发会调函数，然后更新状态，状态的更新会触发页面的更新
+      this.setState(
+        {
+          squares: squares,
+          isX: !this.state.isX
+        });
     }
     render() {
-      const status = 'Next player: X';
-  
+      let status;
+      const winner = calculateWinner(this.state.squares);
+      if (winner) {
+        status = 'Winner: ' + winner;
+      } else {
+        status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+      }
       return (
         <div>
           {/**JSX里面的引用一定要用花括号 */}
@@ -78,3 +90,22 @@ import './index.css';
     document.getElementById('root')
   );
   
+  function calculateWinner(squares) {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return squares[a];
+      }
+    }
+    return null;
+  }
