@@ -53,12 +53,13 @@ import './index.css';
             squares: Array(9).fill(null)
           }
         ],
+        stepNumber: 0,
         isX: true
       }
     }
     //handle*函数定义如何处理UI的事件
     handleClick(i) {
-      const history = this.state.history;
+      const history = this.state.history.slice(0, this.state.stepNumber + 1);
       const current = history[history.length - 1];
       const squares = current.squares.slice();
       if (calculateWinner(squares) || squares[i]) {
@@ -71,15 +72,33 @@ import './index.css';
           history: history.concat([{
             squares: squares,
           }]),
+          stepNumber: history.length,
           isX: !this.state.isX
         });
     }
-    //render定义如何构造页面，以及如何用把state和页面内容连接起来
+    jumpTo(step){
+      this.setState({
+        stepNumber: step,
+        isX: (step % 2) === 0,
+      })
+    }
+    //render定义如何构造页面，以及如何用把state和页面内容连接起来,当状态发生变化是，render
+    //函数会被自动调用
     render() {
       const history = this.state.history
-      const current = history[history.length-1]
+      const current = history[this.state.stepNumber]
       const winner = calculateWinner(current.squares)
-      
+      const moves = history.map((step, move) => {
+        const desc = move ?
+          'Go to move #' + move :
+          'Go to game start';
+        return (
+          <li>
+            <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          </li>
+        );
+      });
+
       let status;
       if (winner) {
         status = 'Winner: ' + winner;
@@ -93,7 +112,7 @@ import './index.css';
           </div>
           <div className="game-info">
             <div>{status}</div>
-            <ol>{/* TODO */}</ol>
+            <ol>{moves}</ol>
           </div>
         </div>
       );
