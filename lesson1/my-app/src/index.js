@@ -10,43 +10,19 @@ import './index.css';
     )
   }
   class Board extends React.Component {
-    constructor(props){
-      super(props)
-      this.state = {
-        squares: Array(9).fill(null),
-        isX: true
-      };
-    }
+    
     renderSquare(i) {
       //value只能是property，只有property可以传入
       return <Square 
-        value={this.state.squares[i]}
-        onClick = {() => this.handleClick(i)}
+        value={this.props.squares[i]}
+        onClick = {() => this.props.onClick(i)}
         />;
     }
-    
-    handleClick(i) {
-      const squares = this.state.squares.slice(); 
-      squares[i] = this.state.isX ? 'X': '0' 
-      //用户的交互，触发会调函数，然后更新状态，状态的更新会触发页面的更新
-      this.setState(
-        {
-          squares: squares,
-          isX: !this.state.isX
-        });
-    }
     render() {
-      let status;
-      const winner = calculateWinner(this.state.squares);
-      if (winner) {
-        status = 'Winner: ' + winner;
-      } else {
-        status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-      }
+      
       return (
         <div>
           {/**JSX里面的引用一定要用花括号 */}
-          <div className="status">{status}</div>
           <div className="board-row">
             {this.renderSquare(0)}
             {this.renderSquare(1)}
@@ -68,14 +44,55 @@ import './index.css';
   }
   
   class Game extends React.Component {
+    //构造函数定义了如何初始化
+    constructor(props){
+      super(props)
+      this.state = {
+        history:[
+          {
+            squares: Array(9).fill(null)
+          }
+        ],
+        isX: true
+      }
+    }
+    //handle*函数定义如何处理UI的事件
+    handleClick(i) {
+      const history = this.state.history;
+      const current = history[history.length - 1];
+      const squares = current.squares.slice();
+      if (calculateWinner(squares) || squares[i]) {
+        return;
+      }
+      squares[i] = this.state.isX ? 'X': '0' 
+      //用户的交互，触发会调函数，然后更新状态，状态的更新会触发页面的更新
+      this.setState(
+        {
+          history: history.concat([{
+            squares: squares,
+          }]),
+          isX: !this.state.isX
+        });
+    }
+    //render定义如何构造页面，以及如何用把state和页面内容连接起来
     render() {
+      const history = this.state.history
+      const current = history[history.length-1]
+      const winner = calculateWinner(current.squares)
+      
+      let status;
+      if (winner) {
+        status = 'Winner: ' + winner;
+      } else {
+        status = 'Next player: ' + (this.state.isX ? 'X' : 'O');
+      }
       return (
         <div className="game">
           <div className="game-board">
-            <Board />
+            <Board squares={current.squares} onClick={(i) => this.handleClick(i)}/>
           </div>
           <div className="game-info">
-            <div>{/* status */}</div>
+            <div>{status}</div>
             <ol>{/* TODO */}</ol>
           </div>
         </div>
