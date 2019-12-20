@@ -18,4 +18,23 @@ function clock()
     </div>
     ReactDOM.render(h,document.getElementById('root'))
 }
-setInterval(clock,1000)
+//setInterval(clock,1000)
+
+//自定义组件本质上也是一个函数
+//自定义组件首字母一定要大写
+function Welcome(props){
+return <h1>welcome {props.name}</h1>
+}
+
+//组件的组合生成新的组件
+function App(){
+    return (
+        <div>
+            <Welcome name="jack"/>
+            <Welcome name="Jim"/>
+            <Welcome name="Tom"/>
+        </div>
+    )
+ 
+}
+ReactDOM.render(<App/>, document.getElementById('root'))
