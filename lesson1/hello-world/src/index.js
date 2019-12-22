@@ -69,4 +69,60 @@ class Clock extends React.Component{
         clearInterval(this.timer)
     }
 }
-ReactDOM.render(<Clock />, document.getElementById('root'))
+//ReactDOM.render(<Clock />, document.getElementById('root'))
+
+//条件渲染,本质就是函数里面的不同返回值
+
+
+class LoginControl extends React.Component {
+    constructor(props) {
+      super(props);
+      this.handleLoginClick = this.handleLoginClick.bind(this);
+      this.handleLogoutClick = this.handleLogoutClick.bind(this);
+      this.state = {isLoggedIn: false};
+    }
+  
+    handleLoginClick() {
+      this.setState({isLoggedIn: true});
+    }
+  
+    handleLogoutClick() {
+      this.setState({isLoggedIn: false});
+    }
+  
+    render() {
+      const isLoggedIn = this.state.isLoggedIn;
+      let button;
+      let greeting;
+  
+      if (isLoggedIn) {
+        button = <button onClick={this.handleLogoutClick}>
+                    Logout
+                </button>
+        greeting = <h1>Welcome back!</h1>;
+      } else {
+        button = <button onClick={this.handleLoginClick}>
+                    Login
+                </button>
+        greeting = <h1>Please sign up.</h1>;
+      }
+      
+      return (
+        <div>
+          {greeting}
+          {button}
+        </div>
+      );
+    }
+  }
+  
+  ReactDOM.render(
+    <LoginControl />,
+    document.getElementById('root')
+  );
+
+  /*
+  1.key是reack的关键字，用来唯一标识一个元素
+  2.key只要求同级的兄弟目录唯一，全局可以相同
+  3.可以在JSX{}里面内嵌list element
+  */
