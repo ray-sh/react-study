@@ -16,7 +16,7 @@ defmodule PhxReactWeb.Router do
   scope "/", PhxReactWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", PageController, :admin
   end
 
   # Other scopes may use custom stacks.
