@@ -1,6 +1,7 @@
+//create-react-app 可以直接在js里面倒入css,因为webpack的支持
+import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import { render } from "react-dom";
-import "./index.css";
 import HomePage from "./components/homepage.js";
 
 // v1 STAR MATCH - Starting Template
