@@ -4,6 +4,7 @@ function HomePage() {
     <div className="jumbotron">
       <h1>self learning</h1>
       <p>Flux, react router study</p>
+      <a href="/about">About</a>
     </div>
   );
 }
