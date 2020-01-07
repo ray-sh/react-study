@@ -67,6 +67,19 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
-### 安装以来的 npm 包
+### 安装依赖的 npm 包
 
 npm install -s flux react-router-dom bootstrap
+
+### Setup api mock server
+
+- API mock server 是用 json-server 来实现，他和 index 的 host server 不再同一个 server
+
+```
+start script
+
+    "start": "run-p start:dev start:api",  //run-p表示并行运行两个server
+    "start:dev": "cross-env REACT_APP_API_URL=http://localhost:3001 react-scripts start",//cross-env用来传递参数
+    "prestart:api": "node ./tools/createMockDb.js",//当调用start:api，prestart:api会自动执行
+    "start:api": "node ./tools/apiServer.js",
+```
