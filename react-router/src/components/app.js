@@ -3,14 +3,14 @@ import HomePage from "./homepage";
 import AboutPage from "./about";
 import Header from "../api/common/header";
 import CoursePage from "../coursepage";
+import { Route } from "react-router-dom";
 function App() {
-  const url = window.location.pathname;
-  //所有的url都会返回index.html,所以不过有404
   return (
     <div className="container-fluid">
       <Header />
-      {url === "/about" ? <AboutPage /> : <HomePage />}
-      <CoursePage></CoursePage>
+      <Route path="/" exact component={HomePage} />
+      <Route path="/about" component={AboutPage} />
+      <Route path="/courses" component={CoursePage} />
     </div>
   );
 }
