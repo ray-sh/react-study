@@ -83,3 +83,21 @@ start script
     "prestart:api": "node ./tools/createMockDb.js",//当调用start:api，prestart:api会自动执行
     "start:api": "node ./tools/apiServer.js",
 ```
+
+### Router 的 key components
+
+- Router，app entry 入口
+- Route，load component for url
+- Link, Anchors, no request is send to server
+
+```
+ NavLink可以使用activeLink来区分active状态，用exact属性来作精确匹配
+ const activeLink = { color: "red" };
+  return (
+    <nav>
+      <NavLink activeStyle={activeLink} to="/" exact>
+        Home
+      </NavLink>
+
+
+```
