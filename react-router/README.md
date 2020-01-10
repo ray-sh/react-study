@@ -101,3 +101,15 @@ start script
 
 
 ```
+
+- 使用 switch/Route 来设置路由规则
+
+```
+   switch会顺序匹配，一旦match会立刻返回，如果没有指定path，表示会匹配任何path
+    <Switch>
+        <Route path="/" exact component={HomePage} />
+        <Route path="/about" component={AboutPage} />
+        <Route path="/courses" component={CoursePage} />
+        <Route component={PageNotFound} />
+      </Switch>
+```
