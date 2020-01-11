@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getCourses } from "./api/courseApi";
+import { Link } from "react-router-dom";
 function CoursePage() {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
@@ -19,7 +20,9 @@ function CoursePage() {
         <tbody>
           {courses.map(course => (
             <tr key={course.id}>
-              <td>{course.title}</td>
+              <td>
+                <Link to={"course/" + course.slug}> {course.title} </Link>
+              </td>
               <td>{course.authorId}</td>
               <td>{course.category}</td>
             </tr>

@@ -60,3 +60,17 @@ start script
 
 - Redirect
   通过redirect，可以把老的url重新定向到新的url
+
+- Router对于URL的解析
+
+```
+1.Link cooked the URL with parameter
+<Link to={"course/" + course.slug}> {course.title} </Link>
+2.Route设置路由
+<Route path="/course/:slug" component={ManageCourse} />
+3. react-router会把URL信息通过props传入
+function ManageCourse(props) {
+  return <div>{props.match.params.slug}</div>;
+}
+4.Debugger可以方便的调试，步骤是标识debuger，打开devtool，操作页面，这是会在devtool里看到break
+```
