@@ -9,6 +9,9 @@ function CoursePage() {
   return (
     <>
       <h1>Courses</h1>
+      <Link to="/course" className="btn btn-primary">
+        Add course{" "}
+      </Link>
       <table className="table">
         <thead>
           <tr>
