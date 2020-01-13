@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CourseForm from "./CourseForm";
 import * as courseApi from "../api/courseApi";
+import { toast } from "react-toastify";
 function ManageCourse(props) {
   //debugger，用来调试的关键字
   const [course, setCouse] = useState({
@@ -23,6 +24,7 @@ function ManageCourse(props) {
     courseApi.saveCourse(course).then(() => {
       //只有这个组件是被Route加载以后，才可以访问props.history，来实现页面的从定向
       props.history.push("/courses");
+      toast.success("Course added");
     });
   }
   return (
